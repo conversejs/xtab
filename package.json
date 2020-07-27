@@ -1,0 +1,27 @@
+{
+  "name": "xtab",
+  "version": "0.0.1",
+  "description": "Lets you denote a primary tab, and broadcast messages to all tabs on the same domain",
+  "main": "src/xtab.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conversejs/xtab.git"
+  },
+  "keywords": [
+    "xtab",
+    "crosstab",
+    "tabs"
+  ],
+  "author": "JC Brand",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/conversejs/xtab/issues"
+  },
+  "homepage": "https://github.com/conversejs/xtab#readme",
+  "devDependencies": {
+    "@converse/skeletor": "conversejs/skeletor#b260c554f4ce961c29deea4740083e58a489aa9b"
+  }
+}
