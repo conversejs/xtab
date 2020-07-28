@@ -20,7 +20,7 @@ const BROADCAST_KEY = 'converse/xtab-event';
  *
  * This class is heavily inspired by the WindowController, by Fastmail Pty Ltd.
  */
-class XTab {
+export default class XTab {
 
     /**
      * Creates a new XTab instance
@@ -30,7 +30,7 @@ class XTab {
     constructor (broadcastkey=BROADCAST_KEY) {
         // A unique id for the window, guaranteed to be different than for any
         // other open window.
-        this.id = new Date().format('%y%m%d%H%M%S') + Math.random();
+        this.id = XTab.generateId();
         this.isFocused = document.hasFocus ? document.hasFocus() : true;
         this._isMaster = false;
         this.broadcastkey = broadcastkey;
@@ -38,6 +38,10 @@ class XTab {
         this._seenTabs = {};
         this._checkTimeout = null;
         this._pingTimeout = null;
+    }
+
+    static generateId () {
+        return (new Date()).toISOString() + Math.random();
     }
 
     set isMaster (value) {
@@ -144,15 +148,8 @@ class XTab {
      @param  { String } type - The name of the event being broadcast
      @param { Object } [data] - The data to broadcast
     */
-    broadcast (type, data) {
-        try {
-            localStorage.setItem(
-                this.broadcastkey,
-                JSON.stringify(Object.assign({tabxid: this.id, type}, data))
-            );
-        } catch (error) {
-            console.error(error);
-        }
+    broadcast (type, data={}) {
+        localStorage.setItem(this.broadcastkey, JSON.stringify(Object.assign({tabxid: this.id, type}, data)));
     }
 
     /**

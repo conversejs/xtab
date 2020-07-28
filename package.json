@@ -4,7 +4,7 @@
   "description": "Lets you denote a primary tab, and broadcast messages to all tabs on the same domain",
   "main": "src/xtab.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,17 @@
   },
   "homepage": "https://github.com/conversejs/xtab#readme",
   "devDependencies": {
-    "@converse/skeletor": "conversejs/skeletor#b260c554f4ce961c29deea4740083e58a489aa9b"
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@converse/skeletor": "conversejs/skeletor#b260c554f4ce961c29deea4740083e58a489aa9b",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "karma": "^5.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1",
+    "karma-jasmine-html-reporter": "^1.5.4"
+  },
+  "dependencies": {
+    "rollup": "^2.23.0"
   }
 }
