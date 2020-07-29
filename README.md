@@ -1,5 +1,7 @@
 # XTab
 
+[![Travis](https://api.travis-ci.org/conversejs/xtab.png?branch=master)](https://travis-ci.org/conversejs/xtab)
+
 XTab is a small utility library that provides an easy API for communicating between
 tabs and for automatically electing a primary (or "master") tab.
 
