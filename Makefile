@@ -16,5 +16,5 @@ node_modules: package.json package-lock.json
 	npm i
 
 .PHONY: check
-check: node_modules
+check: node_modules dist
 	$(KARMA) start karma.conf.js $(ARGS)
