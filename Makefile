@@ -2,6 +2,10 @@ KARMA	?= ./node_modules/.bin/karma
 XTAB 	?= dist/xtab.js
 
 
+.PHONY: clean
+clean:
+	rm -rf node_modules
+
 .PHONY: dist
 dist: $(XTAB)
 
