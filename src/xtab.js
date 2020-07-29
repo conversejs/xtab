@@ -45,8 +45,10 @@ export default class XTab {
     }
 
     set isMaster (value) {
-        this._isMaster = value;
-        this.trigger('isMaster', { tabxid: this.id, 'value': this._isMaster });
+        if (this._isMaster !== value) {
+            this._isMaster = value;
+            this.trigger('isMaster', { tabxid: this.id, 'value': this._isMaster });
+        }
     }
 
     /**
@@ -90,7 +92,6 @@ export default class XTab {
     }
 
     unload () {
-        this.end(this.get('broadcastKey'));
         window.removeEventListener('storage', this);
         window.removeEventListener('unload', this);
         window.removeEventListener('focus', this);
@@ -120,7 +121,7 @@ export default class XTab {
 
         this.on('tabx:ping', event => this.onPing(event));
         this.on('tabx:bye', event => {
-            delete this.seenTabs[event.tabxid];
+            delete this._seenTabs[event.tabxid];
             this.checkMaster();
         });
 
@@ -165,7 +166,7 @@ export default class XTab {
         for (const id in seenWCs) {
             if (seenWCs[id] + 23000 < now) {
                 delete seenWCs[id];
-            } else if ( id < ourId ) {
+            } else if (id < ourId ) {
                 isMaster = false;
             }
         }
