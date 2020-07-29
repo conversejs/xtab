@@ -46,9 +46,9 @@ Once a tab is designated to be the master tab, the `isMaster` event will be trig
 ```
 xtab.on('isMaster',  data => {
     if (data.value) {
-        alert(`The tab with id ${data.tabxid} is now the master tab`);
+        alert(`The tab with id ${data.xtabid} is now the master tab`);
     } else {
-        alert(`The tab with id ${data.tabxid} is no longer the master tab`);
+        alert(`The tab with id ${data.xtabid} is no longer the master tab`);
     }
 });
 ```

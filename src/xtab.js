@@ -47,7 +47,7 @@ export default class XTab {
     set isMaster (value) {
         if (this._isMaster !== value) {
             this._isMaster = value;
-            this.trigger('isMaster', { tabxid: this.id, 'value': this._isMaster });
+            this.trigger('xtab:master', { xtabid: this.id, 'value': this._isMaster });
         }
     }
 
@@ -85,7 +85,7 @@ export default class XTab {
     onStorage (ev) {
         if (ev.key === this.broadcastkey) {
             const data = JSON.parse(ev.newValue);
-            if (data.tabxid !== this.id ) {
+            if (data.xtabid !== this.id ) {
                 this.trigger(data.type, data);
             }
         }
@@ -99,14 +99,14 @@ export default class XTab {
         this._checkTimeout && clearTimeout(this._checkTimeout);
         this._pingTimeout && clearTimeout(this._pingTimeout);
         this.off();
-        this.broadcast('tabx:bye');
+        this.broadcast('xtab:bye');
     }
 
     start () {
         window.addEventListener('storage', this);
         window.addEventListener('unload', this);
 
-        this.broadcast('tabx:hello');
+        this.broadcast('xtab:hello');
 
         const check = () => {
             this.checkMaster();
@@ -119,15 +119,15 @@ export default class XTab {
         this._checkTimeout = setTimeout(check, 500);
         this._pingTimeout = setTimeout(ping, 17000);
 
-        this.on('tabx:ping', event => this.onPing(event));
-        this.on('tabx:bye', event => {
-            delete this._seenTabs[event.tabxid];
+        this.on('xtab:ping', event => this.onPing(event));
+        this.on('xtab:bye', event => {
+            delete this._seenTabs[event.xtabid];
             this.checkMaster();
         });
 
-        this.on('tabx:hello', event => {
+        this.on('xtab:hello', event => {
             this.onPing(event);
-            if (event.tabxid < this.id) {
+            if (event.xtabid < this.id) {
                 this.checkMaster();
             } else {
                 this.sendPing();
@@ -136,11 +136,11 @@ export default class XTab {
     }
 
     sendPing () {
-        this.broadcast('tabx:ping');
+        this.broadcast('xtab:ping');
     }
 
     onPing (event) {
-        this._seenTabs[event.tabxid] = Date.now();
+        this._seenTabs[event.xtabid] = Date.now();
     }
 
     /**
@@ -150,7 +150,7 @@ export default class XTab {
      * @param { Object } [data] - The data to broadcast
      */
     broadcast (type, data={}) {
-        localStorage.setItem(this.broadcastkey, JSON.stringify(Object.assign({tabxid: this.id, type}, data)));
+        localStorage.setItem(this.broadcastkey, JSON.stringify(Object.assign({xtabid: this.id, type}, data)));
     }
 
     /**

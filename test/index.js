@@ -186,7 +186,7 @@ describe("A tab", function () {
         await is_iframe_master_promise;
         // Simulate closing of the master tab
         xtab.unload();
-        await waitUntil(() => iframe.contentWindow.xtab.isMaster, 500);
+        await waitUntil(() => iframe.contentWindow.xtab.isMaster, 501);
         done();
     });
 });
