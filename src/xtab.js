@@ -18,7 +18,7 @@ const BROADCAST_KEY = 'converse/xtab-event';
  * single websocket or push connection, or if you want to have at least one
  * such connection.
  *
- * This class is heavily inspired by the WindowController, by Fastmail Pty Ltd.
+ * This class is inspired by the WindowController class, by Fastmail Pty Ltd.
  */
 export default class XTab {
 
@@ -26,7 +26,7 @@ export default class XTab {
      * Creates a new XTab instance
      * @param { String } [broadcastkey='converse/xtab-event'] The key to use for
      *  the local storage property that will be set to broadcast messages to other tabs.
-    */
+     */
     constructor (broadcastkey=BROADCAST_KEY) {
         // A unique id for the window, guaranteed to be different than for any
         // other open window.
@@ -46,19 +46,19 @@ export default class XTab {
 
     set isMaster (value) {
         this._isMaster = value;
-        this.trigger('isMaster', this._isMaster);
+        this.trigger('isMaster', { tabxid: this.id, 'value': this._isMaster });
     }
 
     /**
-        isMaster
-        @type { Boolean }
-        Is this tab/window the elected master? If multiple windows with the
-        application are open, they will coordinate between themselves so only
-        one has the isMaster property set to true. Note, in some circumstances,
-        this may not happen instantly and there may be a short while when there
-        is no master or more than one master. However, it will quickly resolve
-        itself.
-    */
+     * isMaster
+     * @type { Boolean }
+     *   Is this tab/window the elected master? If multiple windows with the
+     *   application are open, they will coordinate between themselves so only
+     *   one has the isMaster property set to true. Note, in some circumstances,
+     *   this may not happen instantly and there may be a short while when there
+     *   is no master or more than one master. However, it will quickly resolve
+     *   itself.
+     */
     get isMaster () {
          return this._isMaster;
     }
@@ -143,20 +143,20 @@ export default class XTab {
     }
 
     /**
-     Broadcast an event with JSON-serialisable data to other tabs.
-     @method XTab#broadcast
-     @param  { String } type - The name of the event being broadcast
-     @param { Object } [data] - The data to broadcast
-    */
+     * Broadcast an event with JSON-serialisable data to other tabs.
+     * @method XTab#broadcast
+     * @param  { String } type - The name of the event being broadcast
+     * @param { Object } [data] - The data to broadcast
+     */
     broadcast (type, data={}) {
         localStorage.setItem(this.broadcastkey, JSON.stringify(Object.assign({tabxid: this.id, type}, data)));
     }
 
     /**
-     Looks at the set of other windows it knows about and sets the isMaster
-     property based on whether this window has the lowest ordered id.
-     @method XTab#checkMaster
-    */
+     * Looks at the set of other windows it knows about and sets the isMaster
+     * property based on whether this window has the lowest ordered id.
+     * @method XTab#checkMaster
+     */
     checkMaster () {
         const now = Date.now();
         let isMaster = true;
